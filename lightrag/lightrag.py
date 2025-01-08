@@ -177,8 +177,10 @@ class LightRAG:
 
     # Add new field for document status storage type
     doc_status_storage: str = field(default="JsonDocStatusStorage")
-
     def __post_init__(self):
+        self.initialize()
+
+    def initialize(self):
         log_file = os.path.join("lightrag.log")
         set_logger(log_file)
         logger.setLevel(self.log_level)

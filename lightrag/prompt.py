@@ -164,17 +164,37 @@ Generate a response of the target length and format that responds to the user's 
 If you don't know the answer, just say so. Do not make anything up.
 Do not include information where the supporting evidence for it is not provided.
 
----Target response length and format---
+Follow these rules:
+1. The answer should be derived by connecting specific text spans
+2. If the answer cannot be supported by the text, respond with "Cannot be answered from the given text"
+3. Do not provide explanations or reasoning
+4. Only output the answer
 
-{response_type}
-
+Example:
+Question: What is the capital value of the company Elon Musk found in 1999?
+Answer: $42 billion
 ---Data tables---
 
 {context_data}
 
 Add sections and commentary to the response as appropriate for the length and format. Style the response in markdown.
 """
+# PROMPTS["rag_response"] = """You are a question answering assistant. Your task is to answer a question based on the given text. The answer should be found directly within the text.
 
+# Follow these rules:
+# 1. The answer should be a short, specific text span from the original text
+# 2. If the answer cannot be found in the text, respond with "Cannot be answered from the given text"
+# 3. Do not provide explanations or reasoning
+# 4. Only output the answer
+
+# Example:
+# Question: What is the capital of France?
+# Answer: Paris
+
+# Here is the text:
+# {context_data}
+
+# Your response:"""
 PROMPTS["keywords_extraction"] = """---Role---
 
 You are a helpful assistant tasked with identifying both high-level and low-level keywords in the user's query.

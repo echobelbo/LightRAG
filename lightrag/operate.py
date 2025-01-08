@@ -543,8 +543,11 @@ async def kg_query(
     if context is None:
         return PROMPTS["fail_response"]
     sys_prompt_temp = PROMPTS["rag_response"]
+    # sys_prompt = sys_prompt_temp.format(
+    #     context_data=context, response_type=query_param.response_type
+    # )
     sys_prompt = sys_prompt_temp.format(
-        context_data=context, response_type=query_param.response_type
+        context_data=context
     )
     if query_param.only_need_prompt:
         return sys_prompt
@@ -588,8 +591,8 @@ async def _build_query_context(
     text_chunks_db: BaseKVStorage[TextChunkSchema],
     query_param: QueryParam,
 ):
-    # ll_entities_context, ll_relations_context, ll_text_units_context = "", "", ""
-    # hl_entities_context, hl_relations_context, hl_text_units_context = "", "", ""
+    ll_entities_context, ll_relations_context, ll_text_units_context = "", "", ""
+    hl_entities_context, hl_relations_context, hl_text_units_context = "", "", ""
 
     ll_kewwords, hl_keywrds = query[0], query[1]
     if query_param.mode in ["local", "hybrid"]:
